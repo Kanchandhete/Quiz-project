@@ -6,9 +6,9 @@ import dao.SubmissionDAO;
 import entity.Option;
 import entity.Question;
 import entity.Submission;
-import util.FisherYates;
-import util.MergeSort;
-import util.Scorer;
+import algorithms.FisherYates;
+import algorithms.MergeSort;
+import algorithms.Scorer;
 import java.util.*;
 
 

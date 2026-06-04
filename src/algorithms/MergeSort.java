@@ -1,4 +1,4 @@
-package util;
+package algorithms;
 
 import entity.Submission;
 import java.util.ArrayList;
