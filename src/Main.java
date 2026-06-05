@@ -84,7 +84,6 @@ public class Main {
                 String marker="" ;                      
                 if (opt.isIsCorrect()) {
                     correctAnswerLabel = String.valueOf(label);
-//                    marker = " CORRECT";
                 }
                 
                 // Mark user's answer
