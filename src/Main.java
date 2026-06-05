@@ -11,7 +11,6 @@ import algorithms.MergeSort;
 import algorithms.Scorer;
 import java.util.*;
 
-
 public class Main {
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
@@ -57,11 +56,58 @@ public class Main {
         int score = scorer.calculateScore(quiz, answers);
         float pct = scorer.calculatePercentage(score, quiz.size());
 
-        System.out.println("\n--- RESULT ---");
-        System.out.println("Score: " + score + "/" + quiz.size());
-        System.out.printf("Percentage: %.1f%%%n", pct);
-        System.out.println("Time: " + elapsed + " seconds");
+        // ========== NEW: DISPLAY RESULTS WITH CORRECT ANSWERS ==========
+        System.out.println("\n===================================================");
+        System.out.println("-------------------+ QUIZ RESULTS +-----------------");
+        System.out.println("====================================================");
+        System.out.println("  Student: " + name);
+        System.out.println("  Score: " + score + "/" + quiz.size());
+        System.out.printf("  Percentage: %.1f%%%n", pct);
+        System.out.println("  Time: " + elapsed + " seconds");
+        System.out.println("=====================================================");
+        System.out.println("\n--------+ QUESTION REVIEW (Correct Answers): +---------");
+        System.out.println("======================================================");
+        for (int i = 0; i < quiz.size(); i++) {
+            Question q = quiz.get(i);
+            System.out.println("\nQ" + (i+1) + ": " + q.getText());
 
+            List<Option> opts = q.getOptions();
+            Integer userAnswerId = answers.get(q.getId());
+            String userAnswerLabel = "—";
+            String correctAnswerLabel = "—";
+
+            for (int k = 0; k < opts.size(); k++) {
+                Option opt = opts.get(k);
+                char label = (char)('A' + k);
+                
+                // Mark correct answer
+                String marker="" ;                      
+                if (opt.isIsCorrect()) {
+                    correctAnswerLabel = String.valueOf(label);
+//                    marker = " CORRECT";
+                }
+                
+                // Mark user's answer
+                if (opt.getId() == userAnswerId) {
+                    userAnswerLabel = String.valueOf(label);
+                    if (opt.isIsCorrect()) {
+                        marker = " YOUR ANSWER (Correct)";
+                    } else {
+                        marker = " YOUR ANSWER (Wrong)";
+                    }
+                }
+                
+                System.out.println("  " + label + ") " + opt.getText());
+            }
+            
+            // Summary line
+            boolean isCorrect = userAnswerLabel.equals(correctAnswerLabel);
+            System.out.println("  ==> Your answer: " + userAnswerLabel + " | Correct: " + correctAnswerLabel 
+                + (isCorrect ? "[CORRECT]" : " [WRONG]"));
+        }
+        System.out.println("=========================================================");
+
+        
         // 7. Save submission
         SubmissionDAO subDAO = new SubmissionDAO();
         subDAO.saveSubmission(studentId, score, pct, (int) elapsed);
@@ -72,6 +118,6 @@ public class Main {
 
         // 9. Write HTML
         HTMLWriter.write(leaderboard, "output/leaderboard.html");
-        System.out.println("\nLeaderboard updated: output/leaderboard.html");
+        System.out.println("\n Leaderboard updated: output/leaderboard.html");
     }
 }
