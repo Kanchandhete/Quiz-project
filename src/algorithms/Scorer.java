@@ -10,7 +10,8 @@ public class Scorer {
         int score = 0;
         for (Question q : questions) {
             Integer selectedOptionId = answers.get(q.getId());
-            if (selectedOptionId == null) continue;
+            if (selectedOptionId == null) 
+                continue;
 
             for (Option opt : q.getOptions()) {
                 if (opt.getId() == selectedOptionId && opt.isIsCorrect()) {

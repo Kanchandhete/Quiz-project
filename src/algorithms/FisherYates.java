@@ -12,7 +12,7 @@ public class FisherYates {
         // Step 1: shuffle in-place using Fisher-Yates
         for (int i = m - 1; i >= 1; i--) {
             // Pick random j from 0 to i (inclusive)
-            int j = random.nextInt(i + 1);   // ← Piyush: explain WHY i+1
+            int j = random.nextInt(i + 1);    
 
             // Swap all[i] and all[j]
             Question temp = all.get(i);
